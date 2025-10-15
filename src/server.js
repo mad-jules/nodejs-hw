@@ -25,5 +25,5 @@ app.listen(PORT, () => {
 app.get('/notes', getAllNotes);
 app.get('/notes/:noteId', getNoteById);
 
-app.use(notFoundHandler());
-app.use(errorHandler());
+app.use(notFoundHandler);
+app.use(errorHandler);
