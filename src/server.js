@@ -8,18 +8,19 @@ import { router } from './routes/notesRoutes.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
-const PORT = Number(process.env.PORT) || 3000;
 const app = express();
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use(logger);
 app.use(express.json());
 app.use(cors());
 
-await connectMongoDB();
-
 app.use(router);
+
 app.use(notFoundHandler);
 app.use(errorHandler);
+
+await connectMongoDB();
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
