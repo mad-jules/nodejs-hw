@@ -8,7 +8,7 @@
     "dev": "nodemon src/server"
   },
   "repository": {
-    "type": "git",
+    "type": "module",
     "url": "git+https://github.com/mad-jules/nodejs-hw.git"
   },
   "keywords": [],
