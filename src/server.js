@@ -1,9 +1,10 @@
-import { connectMongoDB } from './db/connectMongoDB.js';
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+
+import { connectMongoDB } from './db/connectMongoDB.js';
 import { logger } from './middleware/logger.js';
-import { getAllNotes, getNoteById } from './routes/notesRoutes.js';
+import { router } from './routes/notesRoutes.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
@@ -16,14 +17,10 @@ app.use(cors());
 
 await connectMongoDB();
 
+app.use(router);
+app.use(notFoundHandler);
+app.use(errorHandler);
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-// src/routes/notesRoutes.js
-
-app.get('/notes', getAllNotes);
-app.get('/notes/:noteId', getNoteById);
-
-app.use(notFoundHandler);
-app.use(errorHandler);
