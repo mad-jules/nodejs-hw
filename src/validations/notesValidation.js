@@ -9,7 +9,7 @@ export const getAllNotesSchema = {
     tag: Joi.string()
       .valid(...TAGS)
       .optional(),
-    search: Joi.string().allow('').optional(),
+    search: Joi.string().trim().allow('').optional(),
   }),
 };
 
@@ -25,12 +25,12 @@ export const noteIdSchema = {
 
 export const createNoteSchema = {
   [Segments.BODY]: Joi.object({
-    title: Joi.string().min(1).required().messages({
+    title: Joi.string().trim().min(1).required().messages({
       'string.base': 'Title must be a string',
       'string.min': 'Title should have at least {#limit} character',
       'any.required': 'Title is required',
     }),
-    content: Joi.string().allow('').optional().messages({
+    content: Joi.string().trim().allow('').optional().messages({
       'string.base': 'Content must be a string',
     }),
     tag: Joi.string()
@@ -46,8 +46,8 @@ export const createNoteSchema = {
 export const updateNoteSchema = {
   [Segments.PARAMS]: noteIdSchema[Segments.PARAMS],
   [Segments.BODY]: Joi.object({
-    title: Joi.string().min(1).optional(),
-    content: Joi.string().allow('').optional(),
+    title: Joi.string().trim().min(1).optional(),
+    content: Joi.string().trim().allow('').optional(),
     tag: Joi.string()
       .valid(...TAGS)
       .optional(),
