@@ -4,10 +4,14 @@ import 'dotenv/config';
 
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { logger } from './middleware/logger.js';
-import { router } from './routes/notesRoutes.js';
+import { router as noteRoutes } from './routes/notesRoutes.js';
+import { router as authRoutes } from './routes/authRoutes.js';
+import { router as userRoutes } from './routes/userRoutes.js';
+
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { errors } from 'celebrate';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -15,8 +19,11 @@ const PORT = Number(process.env.PORT) || 3000;
 app.use(logger);
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
-app.use(router);
+app.use(authRoutes);
+app.use(noteRoutes);
+app.use(userRoutes);
 
 app.use(notFoundHandler);
 app.use(errors());
